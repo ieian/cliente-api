@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { useNavigate, useParams } from 'react-router-dom';
 import clienteAxios from '../../config/axios';
+import Spinner from '../layout/Spinner';
 
 function EditarCliente(props) {
     const history = useNavigate();
@@ -15,14 +16,23 @@ function EditarCliente(props) {
         telefono: ''
     });
 
+    const [cargando, setCargando] = useState(true);
+
+    const { nombre, apellido, empresa, email, telefono} = cliente;
+
     useEffect(() => {
         const consultarAPI = async () => {
+            try {
             const clienteConsulta = await clienteAxios.get(`/clientes/${id}`);
-    
             datosClientes(clienteConsulta.data);
+            } catch (error) {
+                console.error('Error al consultar la API:', error);
+            } finally {
+                setCargando(false);
+            }
         }
         consultarAPI();
-    }, []);
+    }, [id]);
 
     const actualizarState = e => {
         datosClientes({
@@ -53,12 +63,12 @@ function EditarCliente(props) {
     }
 
     const validarCliente = () => {
-        const { nombre, apellido, empresa, email, telefono} = cliente;
-
         let valido = !nombre.length || !apellido.length || !empresa.length || !email.length || !telefono.length;
 
         return valido;
     }
+
+    if (cargando) return <Spinner />;
 
     return (
         <Fragment>
@@ -93,7 +103,7 @@ function EditarCliente(props) {
                 </div>
 
                 <div className="enviar">
-                    <input type="submit" className="btn btn-azul" value="Guardar Cambios" disabled={validarCliente() }/>
+                    <input type="submit" className="btn btn-azul" value="Guardar Cambios" disabled={validarCliente()}/>
                 </div>
             </form>
         </Fragment>

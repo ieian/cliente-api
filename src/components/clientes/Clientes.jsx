@@ -18,7 +18,6 @@ function Clientes() {
     }, [clientes]); 
 
     if(!clientes.length) return <Spinner />
-    
 
     return (
         <Fragment>
