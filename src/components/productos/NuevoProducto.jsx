@@ -3,7 +3,6 @@ import Swal from 'sweetalert2';
 import { useNavigate  } from 'react-router-dom';
 import clienteAxios from '../../config/axios';
 
-
 function NuevoProducto() {
     const history = useNavigate();
 
@@ -13,6 +12,40 @@ function NuevoProducto() {
     });
 
     const [archivo, guardarArchivo] = useState('');
+
+    const agregarProducto = async e => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('nombre', producto.nombre);
+        formData.append('precio', producto.precio);
+        formData.append('imagen', archivo);
+
+        try {
+            const res = await clienteAxios.post('/productos', formData,{
+                headers: {
+                    'Content-Type' : 'multipart/form-date'
+                }
+            });
+
+            if(res.status === 200) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Agregado Correctamente",
+                    text: res.data.mensaje
+                });
+            }
+
+            history('/productos');
+        } catch (error) {
+            console.log(error);
+            Swal.fire({
+                icon: "error",
+                title: "Hubo un error",
+                text: "Vuelva a intentarlo"
+            });
+        }
+    }
 
     const leerInfoProducto = e => {
         guardarProducto({
@@ -29,7 +62,7 @@ function NuevoProducto() {
         <Fragment>
             <h2>Nuevo Producto</h2>
 
-            <form action="/productos" method="POST">
+            <form onSubmit={agregarProducto}>
                 <legend>Llena todos los campos</legend>
 
                 <div className="campo">
@@ -54,4 +87,5 @@ function NuevoProducto() {
         </Fragment>
     )
 }
+
 export default NuevoProducto;
