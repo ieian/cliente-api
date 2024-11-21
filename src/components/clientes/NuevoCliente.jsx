@@ -17,7 +17,7 @@ function NuevoCliente() {
     const actualizarState = e => {
         guardarClientes({
             ...cliente, [e.target.name] : e.target.value
-        })
+        });
     }
 
     const validarCliente = () => {
@@ -47,7 +47,8 @@ function NuevoCliente() {
                     });
                 }
                 history('/');
-            });
+            }
+        );
     }
 
     return (

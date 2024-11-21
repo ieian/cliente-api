@@ -22,7 +22,7 @@ function NuevoProducto() {
         formData.append('imagen', archivo);
 
         try {
-            const res = await clienteAxios.post('/productos', formData,{
+            const res = await clienteAxios.post('/productos', formData, {
                 headers: {
                     'Content-Type' : 'multipart/form-date'
                 }
@@ -51,7 +51,7 @@ function NuevoProducto() {
         guardarProducto({
             ...producto,
             [e.target.name] : e.target.value
-        })
+        });
     }
 
     const leerArchivo = e => {

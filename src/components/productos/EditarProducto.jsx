@@ -34,6 +34,40 @@ function EditarProducto(props) {
         consultarAPI();
     }, [id]);
 
+    const editarProducto = async e => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('nombre', producto.nombre);
+        formData.append('precio', producto.precio);
+        formData.append('imagen', archivo);
+
+        try {
+            const res = await clienteAxios.put(`/productos/${id}`, formData,{
+                headers: {
+                    'Content-Type' : 'multipart/form-date'
+                }
+            });
+
+            if(res.status === 200) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Editado Correctamente",
+                    text: res.data.mensaje
+                });
+            }
+
+            history('/productos');
+        } catch (error) {
+            console.log(error);
+            Swal.fire({
+                icon: "error",
+                title: "Hubo un error",
+                text: "Vuelva a intentarlo"
+            });
+        }
+    }
+
     const leerInfoProducto = e => {
         datosProducto({
             ...producto,
@@ -51,7 +85,7 @@ function EditarProducto(props) {
         <Fragment>
             <h2>Nuevo Producto</h2>
 
-            <form >
+            <form onSubmit={editarProducto}>
                 <legend>Llena todos los campos</legend>
 
                 <div className="campo">

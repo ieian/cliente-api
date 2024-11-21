@@ -59,7 +59,8 @@ function EditarCliente(props) {
                     });
                 }
                 history('/');
-            });
+            }
+        );
     }
 
     const validarCliente = () => {
