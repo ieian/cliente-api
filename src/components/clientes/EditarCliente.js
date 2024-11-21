@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import clienteAxios from '../../config/axios';
 
 function EditarCliente(props) {
+    const history = useNavigate();
     const { id } = useParams();
 
     const [cliente, datosClientes] = useState({
@@ -30,6 +31,28 @@ function EditarCliente(props) {
         })
     }
 
+    const actualizarCliente = e => {
+        e.preventDefault();
+
+        clienteAxios.put(`/clientes/${cliente._id}`, cliente)
+            .then(res => {
+                if(res.data.code === 11000) {
+                    Swal.fire({
+                        title: "Hubo un error!",
+                        text: 'Ese correo ya esta registrado',
+                        icon: "error"
+                    });
+                } else {
+                    Swal.fire({
+                        title: "Correcto!",
+                        text: "Se actualizo correctamente",
+                        icon: "success"
+                    });
+                }
+                history('/');
+            });
+    }
+
     const validarCliente = () => {
         const { nombre, apellido, empresa, email, telefono} = cliente;
 
@@ -42,7 +65,7 @@ function EditarCliente(props) {
         <Fragment>
             <h2>Editar Cliente</h2>
 
-            <form>
+            <form onSubmit={actualizarCliente}>
                 <legend>Llena todos los campos</legend>
 
                 <div className="campo">
