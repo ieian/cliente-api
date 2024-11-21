@@ -16,6 +16,14 @@ function NuevoCliente() {
         console.log(cliente);
     }
 
+    const validarCliente = () => {
+        const { nombre, apellido, empresa, email, telefono} = cliente;
+
+        let valido = !nombre.length || !apellido.length || !empresa.length || !email.length || !telefono.length;
+
+        return valido;
+    }
+
     return (
         <Fragment>
             <h2>Nuevo Cliente</h2>
@@ -49,7 +57,7 @@ function NuevoCliente() {
                 </div>
 
                 <div className="enviar">
-                        <input type="submit" className="btn btn-azul" value="Agregar Cliente" />
+                    <input type="submit" className="btn btn-azul" value="Agregar Cliente" disabled={validarCliente() }/>
                 </div>
             </form>
         </Fragment>
