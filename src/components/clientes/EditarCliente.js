@@ -21,7 +21,7 @@ function EditarCliente(props) {
         datosClientes(clienteConsulta.data);
     }
 
-    useEffect( () => {
+    useEffect(() => {
         consultarAPI();
     }, []);
 
