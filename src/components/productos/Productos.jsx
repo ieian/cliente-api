@@ -2,6 +2,7 @@ import React, {Fragment, useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import clienteAxios from '../../config/axios';
 import Producto from './Producto';
+import Spinner from '../layout/Spinner';
 
 function Productos() {
     const [productos, guardarProductos] = useState([]);
@@ -14,6 +15,8 @@ function Productos() {
 
         consultarAPI();
     }, [productos]);
+
+    if(!productos.length) return <Spinner />
 
     return(
         <Fragment>
