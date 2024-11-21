@@ -1,7 +1,11 @@
 import React, { Fragment, useState } from 'react';
+import Swal from 'sweetalert2';
+import { useNavigate  } from 'react-router-dom';
 import clienteAxios from '../../config/axios';
 
 function NuevoCliente() {
+    const history = useNavigate();
+
     const [cliente, guardarClientes] = useState({
         nombre: '',
         apellido: '',
@@ -30,10 +34,19 @@ function NuevoCliente() {
         clienteAxios.post('/clientes', cliente)
             .then(res => {
                 if(res.data.code === 11000) {
-                    console.log('Error de duplicado de mongo')
+                    Swal.fire({
+                        title: "Hubo un error!",
+                        text: 'Ese correo ya esta registrado',
+                        icon: "error"
+                    });
                 } else {
-                    console.log(res.data);
+                    Swal.fire({
+                        title: "Se agrego el Cliente!",
+                        text: res.data.mensaje,
+                        icon: "success"
+                    });
                 }
+                history('/');
             });
     }
 
