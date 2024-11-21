@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import clienteAxios from '../../config/axios';
 
 function NuevoCliente() {
     const [cliente, guardarClientes] = useState({
@@ -13,7 +14,6 @@ function NuevoCliente() {
         guardarClientes({
             ...cliente, [e.target.name] : e.target.value
         })
-        console.log(cliente);
     }
 
     const validarCliente = () => {
@@ -24,11 +24,24 @@ function NuevoCliente() {
         return valido;
     }
 
+    const agregarCliente = e => {
+        e.preventDefault();
+
+        clienteAxios.post('/clientes', cliente)
+            .then(res => {
+                if(res.data.code === 11000) {
+                    console.log('Error de duplicado de mongo')
+                } else {
+                    console.log(res.data);
+                }
+            });
+    }
+
     return (
         <Fragment>
             <h2>Nuevo Cliente</h2>
 
-            <form>
+            <form onSubmit={agregarCliente}>
                 <legend>Llena todos los campos</legend>
 
                 <div className="campo">
@@ -53,7 +66,7 @@ function NuevoCliente() {
 
                 <div className="campo">
                     <label>Teléfono:</label>
-                    <input type="email" placeholder="Teléfono Cliente" name="telefono" onChange={actualizarState}/>
+                    <input type="tel" placeholder="Teléfono Cliente" name="telefono" onChange={actualizarState}/>
                 </div>
 
                 <div className="enviar">
