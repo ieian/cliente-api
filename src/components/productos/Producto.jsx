@@ -1,12 +1,35 @@
 import React from 'react';
+import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
+import clienteAxios from '../../config/axios';
 
 
 function Producto({producto}) {
-    const {_id, nombre, precio, imagen} =producto;
+    const {_id, nombre, precio, imagen} = producto;
 
-    const eliminarProducto = id => {
-
+    const eliminarProducto = idProducto => {
+        Swal.fire({
+            title: "Estas seguro?",
+            text: "Un producto eliminado no se puede recuperar!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, Eliminar!",
+            cancelButtonText: "Cancelar"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                clienteAxios.delete(`/productos/${idProducto}`)
+                    .then(res => {
+                        Swal.fire({
+                            title: "Eliminado!",
+                            text: res.data.mensaje,
+                            icon: "success"
+                        });
+                    }
+                );
+            }
+        });
     }
 
     return(
@@ -26,7 +49,7 @@ function Producto({producto}) {
 
                         <button type="button" className="btn btn-rojo btn-eliminar" onClick={() => eliminarProducto(_id)}>
                             <i className="fas fa-times"></i>
-                            Eliminar Cliente
+                            Eliminar Producto
                         </button>
                     </div>
                 </li>

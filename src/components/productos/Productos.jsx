@@ -13,7 +13,7 @@ function Productos() {
         }
 
         consultarAPI();
-    }, []);
+    }, [productos]);
 
     return(
         <Fragment>
