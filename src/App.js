@@ -17,6 +17,8 @@ import NuevoProducto from "./components/productos/NuevoProducto";
 import EditarProducto from "./components/productos/EditarProducto";
 
 import Pedidos from "./components/pedidos/Pedidos";
+import NuevoPedido from "./components/pedidos/NuevoPedido";
+
 
 function App() {
   return (
@@ -37,6 +39,8 @@ function App() {
               <Route exact path="/productos/editar/:id" Component={EditarProducto} />
 
               <Route exact path="/pedidos" Component={Pedidos} />
+              <Route exact path="/pedidos/nuevo/:id" Component={NuevoPedido} />
+
             </Routes>
           </main>
         </div>
