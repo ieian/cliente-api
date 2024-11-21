@@ -15,13 +15,12 @@ function EditarCliente(props) {
         telefono: ''
     });
 
-    const consultarAPI = async () => {
-        const clienteConsulta = await clienteAxios.get(`/clientes/${id}`);
-
-        datosClientes(clienteConsulta.data);
-    }
-
     useEffect(() => {
+        const consultarAPI = async () => {
+            const clienteConsulta = await clienteAxios.get(`/clientes/${id}`);
+    
+            datosClientes(clienteConsulta.data);
+        }
         consultarAPI();
     }, []);
 
