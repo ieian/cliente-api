@@ -2,7 +2,7 @@ import React from 'react';
 
 function NuevoProducto() {
     return(
-        <h2>Productos</h2>
+        <h2>Nuevo Producto</h2>
     )
 }
 export default NuevoProducto;
