@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import clienteAxios from '../../config/axios';
 
 function Clientes() {
-    return(
-        <h2>Clientes</h2>
-    )
+    const consultarAPI = async () => {
+        const clientesConsulta = await clienteAxios.get('/clientes');
+        
+        console.log(clientesConsulta.data); 
+    };
+
+    useEffect(() => {
+        consultarAPI();
+    }, []); 
+
+    return <h2>Clientes</h2>;
 }
+
 export default Clientes;
