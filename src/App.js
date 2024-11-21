@@ -12,9 +12,10 @@ import Clientes from "./components/clientes/Clientes";
 import NuevoCliente from "./components/clientes/NuevoCliente";
 import EditarCliente from "./components/clientes/EditarCliente";
 
-
-
 import Productos from "./components/productos/Productos";
+import NuevoProducto from "./components/productos/NuevoProducto";
+import EditarProducto from "./components/productos/EditarProducto";
+
 import Pedidos from "./components/pedidos/Pedidos";
 
 function App() {
@@ -31,8 +32,9 @@ function App() {
               <Route exact path="/clientes/nuevo" Component={NuevoCliente} />
               <Route exact path="/clientes/editar/:id" Component={EditarCliente} />
 
-
               <Route exact path="/productos" Component={Productos} />
+              <Route exact path="/productos/nuevo" Component={NuevoProducto} />
+              <Route exact path="/productos/editar/:id" Component={EditarProducto} />
 
               <Route exact path="/pedidos" Component={Pedidos} />
             </Routes>
