@@ -15,8 +15,22 @@ function NuevoPedido(props) {
     const [cliente, guardarCliente] = useState({});
     const [busqueda, guardarBusqueda] = useState('');
     const [productos, guardarProductos] = useState([]);
+    const [total, guardarTotal] = useState(0);
 
     const { nombre, apellido, telefono} = cliente;
+
+    const actualizarTotal = () => {
+        if(productos.length === 0){
+            guardarTotal(0);
+            return;
+        }
+
+        let nuevoTotal = 0;
+
+        productos.map(producto => nuevoTotal += (producto.cantidad * producto.precio));
+
+        guardarTotal(nuevoTotal);
+    }
 
     useEffect(() => {
         const consultarAPI = async () => {
@@ -30,7 +44,9 @@ function NuevoPedido(props) {
             }
         }
         consultarAPI();
-    }, [id]);   
+
+        actualizarTotal();
+    }, [productos]);   
 
     const buscarProducto = async e => {
         e.preventDefault();
@@ -85,29 +101,30 @@ function NuevoPedido(props) {
                 <p>Telefono: {telefono}</p>
             </div>
 
-                <FormBuscarProducto
-                    buscarProducto={buscarProducto}
-                    leerDatosBusqueda={leerDatosBusqueda}
-                />
+            <FormBuscarProducto
+                buscarProducto={buscarProducto}
+                leerDatosBusqueda={leerDatosBusqueda}
+            />
 
-                <ul className="resumen">
-                    {productos.map((producto, index) => (
-                        <FormCantidadProducto 
-                            key={producto.producto}
-                            producto={producto}
-                            index={index}
-                            sumarProducto={sumarProducto}
-                            restarProducto={restarProducto}
-                        />
-                    ))}
-                </ul>
-            <div className="campo">
-                <label>Total:</label>
-                <input type="number" name="precio" placeholder="Precio" readOnly="readOnly" />
-            </div>
-            <div className="enviar">
-                <input type="submit" className="btn btn-azul" value="Agregar Pedido" />
-            </div>
+            <ul className="resumen">
+                {productos.map((producto, index) => (
+                    <FormCantidadProducto 
+                        key={producto.producto}
+                        producto={producto}
+                        index={index}
+                        sumarProducto={sumarProducto}
+                        restarProducto={restarProducto}
+                    />
+                ))}
+            </ul>
+
+            <p className='total'>Total a pagar: <span>$ {total}</span></p>
+
+            { total > 0 ? (
+                <form>
+                    <input type="submit" className="btn btn-verde btn-block" value="Realizar Pedido"/>
+                </form>
+            ) : null} 
         </Fragment>
     )   
 }
