@@ -1,36 +1,30 @@
 import React from 'react';
 
-function DetallesPedido(props) {
+function DetallesPedido({pedido, eliminarPedido}) {
+    const { cliente } = pedido;
+
     return (
         <li className="pedido">
             <div className="info-pedido">
                 <p className="id">ID: 0192019201291201</p>
-                <p className="nombre">Cliente: Juan Pablo De la torre</p>
+                <p className="nombre">Cliente: {cliente.nombre} {cliente.apellido}</p>
 
                 <div className="articulos-pedido">
                     <p className="productos">Artículos Pedido: </p>
                     <ul>
-                        <li>
-                            <p>Macbook Pro</p>
-                            <p>Precio: $3000</p>
-                            <p>Cantidad: 4</p>
-                        </li>
-                        <li>
-                            <p>Macbook Pro</p>
-                            <p>Precio: $3000</p>
-                            <p>Cantidad: 4</p>
-                        </li>
-                        <li>
-                            <p>Macbook Pro</p>
-                            <p>Precio: $3000</p>
-                            <p>Cantidad: 4</p>
-                        </li>
+                        {pedido.pedido.map(articulos => (
+                            <li key={pedido._id+articulos.producto._id}>
+                                <p>{articulos.producto.nombre}</p>
+                                <p>$ {articulos.producto.precio}</p>
+                                <p>Cantidad: {articulos.cantidad}</p>
+                            </li>
+                        ))}
                     </ul>
                 </div>
-                <p className="total">Total: $3,500 </p>
+                <p className="total">Total: ${pedido.total} </p>
             </div>
             <div className="acciones">
-                <button type="button" className="btn btn-rojo btn-eliminar">
+                <button type="button" className="btn btn-rojo btn-eliminar" onClick={() => eliminarPedido(pedido._id)}>
                     <i className="fas fa-times"></i>
                     Eliminar Pedido
                 </button>
