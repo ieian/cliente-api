@@ -60,11 +60,21 @@ function NuevoPedido(props) {
     if (cargando) return <Spinner />;
 
     const restarProducto = i => {
-        console.log('uno menos', i);
+        const todosProductos = [...productos];
+
+        if(todosProductos[i].cantidad === 0) return;
+
+        todosProductos[i].cantidad--;
+
+        guardarProductos(todosProductos);
     }
 
     const sumarProducto = i => {
-        console.log('uno mas', i);
+        const todosProductos = [...productos];
+
+        todosProductos[i].cantidad++;
+
+        guardarProductos(todosProductos);
     }
     
     return(
