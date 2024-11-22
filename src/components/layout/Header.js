@@ -23,7 +23,7 @@ const Header = () => {
         <header className="barra">
             <div className="contenedor">
                 <div className="contenido-barra">
-                    <h1>YEYO - Administrador de Clientes</h1>
+                    <h1>YEYO - Pedidos de Camisas</h1>
                     { auth.auth ? (
                         <button type="button" className="btn btn-rojo" onClick={cerrarSesion}>
                             <i className="far fa-times-circle"></i>
