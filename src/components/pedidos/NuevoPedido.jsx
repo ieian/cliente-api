@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import clienteAxios from '../../config/axios';
 import Spinner from '../layout/Spinner';
 
@@ -74,7 +74,10 @@ function NuevoPedido(props) {
 
                 <ul className="resumen">
                     {productos.map((producto, index) => (
-                        <FormCantidadProducto />
+                        <FormCantidadProducto 
+                            key={producto.producto}
+                            producto={producto}
+                        />
                     ))}
                 </ul>
             <div className="campo">
