@@ -1,6 +1,6 @@
 import React from 'react';
 
-function FormCantidadProducto({producto, index, restarProducto, sumarProducto}){
+function FormCantidadProducto({producto, index, restarProducto, sumarProducto, eliminarProductoPedido}){
     return(
         <li>
             <div className="texto-producto">
@@ -13,7 +13,7 @@ function FormCantidadProducto({producto, index, restarProducto, sumarProducto}){
                     <p>{producto.cantidad}</p>
                     <i className="fas fa-plus" onClick={() => sumarProducto(index)}></i>
                 </div>
-                <button type="button" className="btn btn-rojo">
+                <button type="button" className="btn btn-rojo" onClick={() => eliminarProductoPedido(producto.producto)}>
                     <i className="fas fa-minus-circle"></i>
                         Eliminar Producto
                 </button>

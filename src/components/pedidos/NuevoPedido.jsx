@@ -92,6 +92,12 @@ function NuevoPedido(props) {
 
         guardarProductos(todosProductos);
     }
+
+    const eliminarProductoPedido = id => {
+        const todosProductos = productos.filter(producto => producto.producto !== id);
+
+        guardarProductos(todosProductos);
+    }
     
     return(
         <Fragment>
@@ -114,6 +120,7 @@ function NuevoPedido(props) {
                         index={index}
                         sumarProducto={sumarProducto}
                         restarProducto={restarProducto}
+                        eliminarProductoPedido={eliminarProductoPedido}
                     />
                 ))}
             </ul>
