@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import clienteAxios from '../../config/axios';
 import Spinner from '../layout/Spinner';
 
@@ -9,6 +9,7 @@ import FormCantidadProducto from './FormCantidadProducto';
 
 
 function NuevoPedido(props) {
+    const history = useNavigate();
     const { id } = useParams();
 
     const [cargando, setCargando] = useState(true);
@@ -99,6 +100,33 @@ function NuevoPedido(props) {
         guardarProductos(todosProductos);
     }
     
+    const realizarPedido = async e => {
+        e.preventDefault();
+
+        const pedido = {
+            "cliente": id,
+            "pedido": productos,
+            "total" : total
+        }
+
+        const resultado = await clienteAxios.post(`/pedidos/nuevo/${id}`, pedido);
+
+        if(resultado.status === 200){
+            Swal.fire({
+                icon: "success",
+                title: "Correcto",
+                text: resultado.data.mensaje
+            });
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Hubo un error",
+                text: "Vuelva a intentarlo"
+            });
+        }
+
+        history('/pedidos');
+    }
     return(
         <Fragment>
             <div className="ficha-cliente">
@@ -128,7 +156,7 @@ function NuevoPedido(props) {
             <p className='total'>Total a pagar: <span>$ {total}</span></p>
 
             { total > 0 ? (
-                <form>
+                <form onSubmit={realizarPedido}>
                     <input type="submit" className="btn btn-verde btn-block" value="Realizar Pedido"/>
                 </form>
             ) : null} 
