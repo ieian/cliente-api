@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import clienteAxios from '../../config/axios';
+import { CRMContext } from '../../context/CRMContext';
 
 function Login() {
     const history = useNavigate();
     const [credenciales, guardarCredenciales] = useState({});
+    const [auth, guardarAuth] =useContext(CRMContext);
 
     const iniciarSesion = async e => {
         e.preventDefault();
@@ -15,6 +17,11 @@ function Login() {
             
             const { token } = respuesta.data;
             localStorage.setItem('token',token);
+
+            guardarAuth({
+                token,
+                auth: true
+            })
 
             Swal.fire({
                 icon: "success",
