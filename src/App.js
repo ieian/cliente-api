@@ -19,6 +19,8 @@ import EditarProducto from "./components/productos/EditarProducto";
 import Pedidos from "./components/pedidos/Pedidos";
 import NuevoPedido from "./components/pedidos/NuevoPedido";
 
+import Login from "./components/auth/Login";
+
 function App() {
   return (
     <Router>
@@ -40,6 +42,7 @@ function App() {
               <Route exact path="/pedidos" Component={Pedidos} />
               <Route exact path="/pedidos/nuevo/:id" Component={NuevoPedido} />
 
+              <Route exact path="/iniciar-sesion" Component={Login} />
             </Routes>
           </main>
         </div>
