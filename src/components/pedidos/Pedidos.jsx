@@ -1,6 +1,7 @@
 import React, { useEffect, useState, Fragment, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import Spinner from '../layout/Spinner';
 import clienteAxios from '../../config/axios';
 import DetallesPedido from './DetallesPedido';
 import { CRMContext } from '../../context/CRMContext';
@@ -56,6 +57,8 @@ function Pedidos() {
             }
         })
     }
+
+    if(!pedidos.length) return <Spinner />
 
     return(
         <Fragment>
