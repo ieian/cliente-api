@@ -22,7 +22,7 @@ function Clientes() {
         
                     guardarClientes(clientesConsulta.data);
                 } catch (error) {
-                    if(error.response.status = 500){
+                    if(error.response.status === 500){
                         history('/iniciar-sesion');
                     }
                 }

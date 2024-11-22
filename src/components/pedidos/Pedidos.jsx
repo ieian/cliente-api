@@ -1,20 +1,37 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import clienteAxios from '../../config/axios';
-
 import DetallesPedido from './DetallesPedido';
+import { CRMContext } from '../../context/CRMContext';
 
 function Pedidos() {
+    const history = useNavigate();
     const [pedidos, guardarPedidos] = useState([]);
+    const [auth, guardarAuth] =useContext(CRMContext);
 
     useEffect(() =>{
-        const consultarAPI = async () => {
-            const resultado = await clienteAxios.get('/pedidos');
+        if(auth.token !== '') {
+            const consultarAPI = async () => {
+                try {
+                    const pedidosConsulta = await clienteAxios.get('/pedidos', {
+                        headers: {
+                            Authorization : `Bearer ${auth.token}`
+                        }
+                    });
     
-            guardarPedidos(resultado.data);
-        };
+                    guardarPedidos(pedidosConsulta.data);
+                } catch (error) {
+                    if(error.response.status === 500){
+                        history('/iniciar-sesion');
+                    }
+                }
+            };
 
-        consultarAPI();
+            consultarAPI();        
+        } else {
+            history('/iniciar-sesion');
+        } 
     }, [pedidos]);
 
     const eliminarPedido = id => {

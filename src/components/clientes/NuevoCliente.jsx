@@ -1,6 +1,6 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState, Fragment } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { useNavigate  } from 'react-router-dom';
 import clienteAxios from '../../config/axios';
 
 function NuevoCliente() {

@@ -6,7 +6,7 @@ function DetallesPedido({pedido, eliminarPedido}) {
     return (
         <li className="pedido">
             <div className="info-pedido">
-                <p className="id">ID: 0192019201291201</p>
+                <p className="id">ID: {pedido._id}</p>
                 <p className="nombre">Cliente: {cliente.nombre} {cliente.apellido}</p>
 
                 <div className="articulos-pedido">

@@ -1,19 +1,37 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState, Fragment, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import clienteAxios from '../../config/axios';
-import Producto from './Producto';
 import Spinner from '../layout/Spinner';
+import Producto from './Producto';
+import { CRMContext } from '../../context/CRMContext';
 
 function Productos() {
+    const history = useNavigate();
     const [productos, guardarProductos] = useState([]);
+    const [auth, guardarAuth] =useContext(CRMContext);
 
     useEffect(()  => {
-        const consultarAPI = async () => {
-            const productosConsulta = await clienteAxios.get('/productos');
-            guardarProductos(productosConsulta.data);
-        }
+        if(auth.token !== '') {
+            const consultarAPI = async () => {
+                try {
+                    const productosConsulta = await clienteAxios.get('/productos', {
+                        headers: {
+                            Authorization : `Bearer ${auth.token}`
+                        }
+                    });
 
-        consultarAPI();
+                    guardarProductos(productosConsulta.data);
+                } catch (error) {
+                    if(error.response.status === 500){
+                        history('/iniciar-sesion');
+                    }
+                }
+            };
+
+            consultarAPI();
+        } else {
+            history('/iniciar-sesion');
+        } 
     }, [productos]);
 
     if(!productos.length) return <Spinner />
