@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import { useNavigate, useParams } from 'react-router-dom';
 import clienteAxios from '../../config/axios';
 import Spinner from '../layout/Spinner';
-
+import FormBuscarProducto from '../productos/FormBuscarProducto';
 
 function NuevoPedido(props) {
     const { id } = useParams();
@@ -31,6 +31,14 @@ function NuevoPedido(props) {
         consultarAPI();
     }, [id]);   
 
+    const buscarProducto = () => {
+
+    }
+
+    const leerDatosBusqueda = () => {
+
+    }
+
     if (cargando) return <Spinner />;
 
     return(
@@ -41,13 +49,10 @@ function NuevoPedido(props) {
                 <p>Telefono: {telefono}</p>
             </div>
 
-            <form>
-                <legend>Busca un Producto y agrega una cantidad</legend>
-
-                <div className="campo">
-                    <label>Productos:</label>
-                    <input type="text" placeholder="Nombre Productos" name="productos" />
-                </div>
+                <FormBuscarProducto
+                    buscarProducto={buscarProducto}
+                    leerDatosBusqueda={leerDatosBusqueda}
+                />
 
                 <ul className="resumen">
                     <li>
@@ -102,14 +107,13 @@ function NuevoPedido(props) {
                         </div>
                     </li>
                 </ul>
-                <div className="campo">
-                    <label>Total:</label>
-                    <input type="number" name="precio" placeholder="Precio" readOnly="readOnly" />
-                </div>
-                <div className="enviar">
-                    <input type="submit" className="btn btn-azul" value="Agregar Pedido" />
-                </div>
-            </form>
+            <div className="campo">
+                <label>Total:</label>
+                <input type="number" name="precio" placeholder="Precio" readOnly="readOnly" />
+            </div>
+            <div className="enviar">
+                <input type="submit" className="btn btn-azul" value="Agregar Pedido" />
+            </div>
         </Fragment>
     )   
 }
