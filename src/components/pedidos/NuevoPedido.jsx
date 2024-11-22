@@ -3,19 +3,16 @@ import Swal from 'sweetalert2';
 import { useNavigate, useParams } from 'react-router-dom';
 import clienteAxios from '../../config/axios';
 import Spinner from '../layout/Spinner';
-import FormBuscarProducto from '../productos/FormBuscarProducto';
+import FormBuscarProducto from './FormBuscarProducto';
 
 function NuevoPedido(props) {
     const { id } = useParams();
 
     const [cargando, setCargando] = useState(true);
+    const [cliente, guardarCliente] = useState({});
+    const [busqueda, guardarBusqueda] = useState('');
 
-    const [cliente, guardarCliente] = useState({
-
-    });
-
-    const { nombre, apellido, empresa, email, telefono} = cliente;
-
+    const { nombre, apellido, telefono} = cliente;
 
     useEffect(() => {
         const consultarAPI = async () => {
@@ -31,12 +28,26 @@ function NuevoPedido(props) {
         consultarAPI();
     }, [id]);   
 
-    const buscarProducto = () => {
+    const buscarProducto = async e => {
+        e.preventDefault();
 
+        const resultadoBusqueda = await clienteAxios.post(`/productos/busqueda/${busqueda}`);
+
+        if(resultadoBusqueda.data[0]){
+            
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "No Resultados",
+                text: "No hay resultados"
+            });
+        }
+
+        console.log(resultadoBusqueda);
     }
 
-    const leerDatosBusqueda = () => {
-
+    const leerDatosBusqueda = e => {
+        guardarBusqueda( e.target.value );
     }
 
     if (cargando) return <Spinner />;
