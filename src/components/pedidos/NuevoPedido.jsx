@@ -59,6 +59,14 @@ function NuevoPedido(props) {
 
     if (cargando) return <Spinner />;
 
+    const restarProducto = i => {
+        console.log('uno menos', i);
+    }
+
+    const sumarProducto = i => {
+        console.log('uno mas', i);
+    }
+    
     return(
         <Fragment>
             <div className="ficha-cliente">
@@ -77,6 +85,9 @@ function NuevoPedido(props) {
                         <FormCantidadProducto 
                             key={producto.producto}
                             producto={producto}
+                            index={index}
+                            sumarProducto={sumarProducto}
+                            restarProducto={restarProducto}
                         />
                     ))}
                 </ul>
